@@ -1,0 +1,97 @@
+table dim_product
+	lineageTag: 6d8aad90-8a1f-471b-ab8f-762ee350aeaa
+
+	column product_key
+		dataType: int64
+		formatString: 0
+		lineageTag: ed06a1f1-6a44-40a0-a306-6136fcdd93d7
+		summarizeBy: none
+		sourceColumn: product_key
+
+		annotation SummarizationSetBy = Automatic
+
+	column product_code
+		dataType: string
+		lineageTag: c1f8a847-0f7a-49ef-b5cc-b93c0338eb96
+		summarizeBy: none
+		sourceColumn: product_code
+
+		annotation SummarizationSetBy = Automatic
+
+	column product_name
+		dataType: string
+		lineageTag: 8df90cfb-5d67-4833-962a-0f6ff728501f
+		summarizeBy: none
+		sourceColumn: product_name
+
+		annotation SummarizationSetBy = Automatic
+
+	column brand
+		dataType: string
+		lineageTag: 743f88e5-4604-41d6-a60a-8e4a40678973
+		summarizeBy: none
+		sourceColumn: brand
+
+		annotation SummarizationSetBy = Automatic
+
+	column subcategory
+		dataType: string
+		lineageTag: c4bbe8ad-216a-493a-99b5-e2a867dfe8bf
+		summarizeBy: none
+		sourceColumn: subcategory
+
+		annotation SummarizationSetBy = Automatic
+
+	column category
+		dataType: string
+		lineageTag: 3d48eadd-64c9-468a-9e16-bf9488234781
+		summarizeBy: none
+		sourceColumn: category
+
+		annotation SummarizationSetBy = Automatic
+
+	column price
+		dataType: double
+		formatString: #,0.00
+		lineageTag: 5c715d55-9b34-4bd8-9587-239b7a4cfc07
+		summarizeBy: sum
+		sourceColumn: price
+
+		annotation SummarizationSetBy = Automatic
+
+	column supplier
+		dataType: string
+		lineageTag: 9a01ab0d-265e-4d0f-9f87-df43f7741149
+		summarizeBy: none
+		sourceColumn: supplier
+
+		annotation SummarizationSetBy = Automatic
+
+	partition dim_product = m
+		mode: import
+		queryGroup: 02_Dimension
+		source =
+				let
+				    Source = Excel.Workbook(File.Contents("C:\Users\Admin\Desktop\powerbi-ultimate-course\datasets\05_project_clean_model\raw_tables.xlsx"), null, true),
+				    products_Sheet = Source{[Item="products",Kind="Sheet"]}[Data],
+				    #"Promoted Headers" = Table.PromoteHeaders(products_Sheet, [PromoteAllScalars=true]),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"ProductCode", type text}, {"ProductName", type text}, {"Brand", type text}, {"SubcategoryName", type text}, {"UnitPrice", type number}, {"PrimarySupplier", type text}, {"ProductDescription", type text}, {"hash_key", type text}, {"source_id", type text}}),
+				    #"Filtered Rows" = Table.SelectRows(#"Changed Type", each ([ProductCode] <> "ZZZ-000")),
+				    #"Merged Queries" = Table.NestedJoin(#"Filtered Rows", {"SubcategoryName"}, subcategories, {"subcategory"}, "subcategories", JoinKind.LeftOuter),
+				    #"Expanded subcategories" = Table.ExpandTableColumn(#"Merged Queries", "subcategories", {"category"}, {"subcategories.category"}),
+				    #"Added Index" = Table.AddIndexColumn(#"Expanded subcategories", "Index", 1, 1, Int64.Type),
+				    #"Renamed Columns" = Table.RenameColumns(#"Added Index",{{"Index", "product_key"}}),
+				    #"Removed Columns" = Table.RemoveColumns(#"Renamed Columns",{"ProductDescription", "hash_key", "source_id"}),
+				    #"Renamed Columns1" = Table.RenameColumns(#"Removed Columns",{{"subcategories.category", "category"}}),
+				    #"Reordered Columns" = Table.ReorderColumns(#"Renamed Columns1",{"product_key", "ProductCode", "ProductName", "Brand", "SubcategoryName", "category", "UnitPrice", "PrimarySupplier"}),
+				    #"Renamed Columns2" = Table.RenameColumns(#"Reordered Columns",{{"ProductCode", "product_code"}, {"ProductName", "product_name"}, {"Brand", "brand"}, {"SubcategoryName", "subcategory"}, {"UnitPrice", "price"}, {"PrimarySupplier", "primary_supplier"}}),
+				    #"Capitalized Each Word" = Table.TransformColumns(#"Renamed Columns2",{{"category", Text.Proper, type text}}),
+				    #"Renamed Columns3" = Table.RenameColumns(#"Capitalized Each Word",{{"primary_supplier", "supplier"}}),
+				    #"Filtered Rows1" = Table.SelectRows(#"Renamed Columns3", each ([product_code] <> "ELE-901" and [product_code] <> "HOM-902"))
+				in
+				    #"Filtered Rows1"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

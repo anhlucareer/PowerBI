@@ -1,0 +1,53 @@
+table TopProducts
+	lineageTag: 21b3fee9-f8b4-49f5-b7cf-4fc784de55d6
+
+	column category
+		lineageTag: 3c8172f1-2942-4737-962c-c0c90998d18d
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [category]
+
+		annotation SummarizationSetBy = Automatic
+
+	column product_name
+		lineageTag: 21fcd766-82d1-4a40-a0fc-c2a560e7892b
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [product_name]
+
+		annotation SummarizationSetBy = Automatic
+
+	partition TopProducts = calculated
+		mode: import
+		source = ```
+				
+				VAR Base = 
+				    FILTER (
+				        ADDCOLUMNS (
+				            ALLSELECTED ( dim_product[category], dim_product[product_name] ),
+				            "revenue", [total_revenue]
+				        ),
+				        NOT ISBLANK ( [revenue] )
+				    )
+				VAR TotalRevenue = SUMX ( Base, [revenue] )
+				VAR RankedBase =
+				    ADDCOLUMNS (
+				        Base,
+				        "CumulativeRevenue",
+				            VAR CurrentRevenue = [revenue]
+				            RETURN
+				                SUMX ( FILTER ( Base, [revenue] >= CurrentRevenue ), [revenue] )
+				    )
+				RETURN
+				    SELECTCOLUMNS (
+				        FILTER (
+				            RankedBase,
+				            DIVIDE ( [CumulativeRevenue], TotalRevenue ) <= 0.60
+				        ),
+				        "category", dim_product[category],
+				        "product_name", dim_product[product_name]
+				    )
+				```
+
+	annotation PBI_Id = 2533caa6ac9848c395bf28df19c54696
+

@@ -1,0 +1,213 @@
+table dim_date
+	lineageTag: 463ee264-23ec-4dba-8115-11b458a157cb
+	dataCategory: Time
+
+	column Date
+		isKey
+		formatString: yyyy-mm-dd
+		lineageTag: 0595565b-4132-4df8-ab34-f2aa37b83b4f
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Date]
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+		annotation PBI_FormatHint = {"isDateTimeCustom":true}
+
+	column 'Year Quarter'
+		lineageTag: 4ce6f496-0ce4-43b6-ad87-ada796c6e8f9
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Year Quarter]
+		sortByColumn: 'Year Quarter Number'
+
+		annotation SummarizationSetBy = Automatic
+
+	column Year
+		formatString: 0
+		lineageTag: 34403885-bda0-4553-9fd9-9129ee061013
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Year]
+
+		annotation SummarizationSetBy = User
+
+	column 'Month Number'
+		formatString: 0
+		lineageTag: 5ef72c3f-e5bc-4918-aa9c-c52e54950df8
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Month Number]
+
+		annotation SummarizationSetBy = User
+
+	column 'Quarter Number'
+		formatString: 0
+		lineageTag: 5f34dedc-7421-467b-9f02-ff7ce8d7418c
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Quarter Number]
+
+		annotation SummarizationSetBy = User
+
+	column Quarter
+		lineageTag: aef7c4c3-b333-45cd-9f97-e0de00b5cab3
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Quarter]
+
+		annotation SummarizationSetBy = Automatic
+
+	column Month
+		lineageTag: 0f325a10-a2d7-488b-8ccd-3ac230cba790
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Month]
+		sortByColumn: 'Month Number'
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Week Day Number'
+		formatString: 0
+		lineageTag: 741e78f0-0200-46c1-9c2a-65b33ecaf80c
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Week Day Number]
+
+		annotation SummarizationSetBy = User
+
+	column 'Week Day'
+		lineageTag: 5aa826ef-864a-4461-80d3-3e78d3332c3d
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Week Day]
+		sortByColumn: 'Week Day Number'
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Year Month Number'
+		formatString: 0
+		lineageTag: d1043cdf-30ac-4622-8417-5c9be98e2086
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Year Month Number]
+
+		annotation SummarizationSetBy = User
+
+	column 'Year Month'
+		lineageTag: 198a4b86-dfa0-4c41-acca-9434a0400163
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Year Month]
+		sortByColumn: 'Year Month Number'
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Year Quarter Number'
+		formatString: 0
+		lineageTag: 1d400b07-b7f7-4339-ac5d-db5c5408729f
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Year Quarter Number]
+
+		annotation SummarizationSetBy = User
+
+	column 'Week Number'
+		formatString: 0
+		lineageTag: ab241788-7a47-4441-b729-a3770c073a1d
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Week Number]
+
+		annotation SummarizationSetBy = User
+
+	column 'Year Week'
+		lineageTag: 58bd6ec9-cdb3-480b-90b5-1e2cee04a4f4
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Year Week]
+		sortByColumn: 'Year Week Number'
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Year Week Number'
+		formatString: 0
+		lineageTag: d54f6f10-8f12-4666-a74a-1db548179cf9
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Year Week Number]
+
+		annotation SummarizationSetBy = User
+
+	column 'ISO Year'
+		formatString: 0
+		lineageTag: db919250-cdf3-4998-8595-14efe3b4e1f6
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [ISO Year]
+
+		annotation SummarizationSetBy = User
+
+	column 'ISO Week'
+		formatString: 0
+		lineageTag: e31e3bfd-3462-4096-99a3-07f4efc4d51c
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [ISO Week]
+
+		annotation SummarizationSetBy = User
+
+	hierarchy 'Year Hierarchy'
+		lineageTag: cb31c26e-df27-404b-b4aa-bf179f7384c8
+
+		level Year
+			lineageTag: aa98fc52-5ad7-4fa1-8deb-e58ad5dba77b
+			column: Year
+
+		level 'Year Quarter'
+			lineageTag: a98a102c-bdfc-4180-9ae4-4464b964b654
+			column: 'Year Quarter'
+
+		level 'Year Month'
+			lineageTag: b9194309-11bd-4de5-a1d2-584461d30ac3
+			column: 'Year Month'
+
+		level 'Year Week'
+			lineageTag: f96416c3-495e-4758-a9c7-ce6ad675edfd
+			column: 'Year Week'
+
+	partition dim_date = calculated
+		mode: import
+		source =
+				
+				VAR MinYear = YEAR ( MIN ( fact_sales[order_date] ) )
+				VAR MaxYear = YEAR ( MAX ( fact_sales[order_date] ) )
+				RETURN
+				    ADDCOLUMNS (
+				        FILTER (
+				            CALENDARAUTO ( ),
+				            YEAR ( [Date] ) >= MinYear &&
+				            YEAR ( [Date] ) <= MaxYear
+				        ),
+				    "Year", YEAR ( [Date] ),
+				    "Quarter Number", INT ( FORMAT ( [Date], "q" ) ),
+				    "Quarter", "Q" & INT ( FORMAT ( [Date], "q" ) ),
+				    "Month Number", MONTH ( [Date] ),
+				    "Month", FORMAT ( [Date], "mmm" ),
+				    "Week Number", WEEKNUM ( [Date], 2 ),
+				    "ISO Year", YEAR ( [Date] + 3 - MOD ( WEEKDAY ( [Date], 2 ) - 1, 7 ) ),
+				    "ISO Week", WEEKNUM ( [Date], 21 ),
+				    "Year Week Number", YEAR ( [Date] + 3 - MOD ( WEEKDAY ( [Date], 2 ) - 1, 7 ) ) * 100 + WEEKNUM ( [Date], 21 ),
+				    "Year Week", "W" & FORMAT ( WEEKNUM ( [Date], 21 ), "00" ) & "-" & YEAR ( [Date] + 3 - MOD ( WEEKDAY ( [Date], 2 ) - 1, 7 ) ),
+				    "Week Day Number", WEEKDAY ( [Date] ,2),
+				    "Week Day", FORMAT ( [Date], "ddd" ),
+				    "Year Month Number", YEAR ( [Date] ) * 100 + MONTH ( [Date] ),
+				    "Year Month", FORMAT ( [Date], "mmm" ) & " " & YEAR ( [Date] ),
+				    "Year Quarter Number", YEAR ( [Date] ) * 100 + INT ( FORMAT ( [Date], "q" ) ),
+				    "Year Quarter", "Q" & FORMAT ( [Date], "q" ) & "-" & YEAR ( [Date] )
+				    )
+
+	annotation PBI_Id = 3f1432588def42958fc8f0e5e236a135
+
