@@ -12360,7 +12360,7 @@ cultureInfo en-US
 			      "Definition": {
 			        "Binding": {
 			          "ConceptualEntity": "_measures",
-			          "ConceptualProperty": "sales YTD"
+			          "ConceptualProperty": "revenue YTD"
 			        }
 			      },
 			      "State": "Generated",
@@ -12412,7 +12412,7 @@ cultureInfo en-US
 			      "Definition": {
 			        "Binding": {
 			          "ConceptualEntity": "_measures",
-			          "ConceptualProperty": "sales QTD"
+			          "ConceptualProperty": "revenue QTD"
 			        }
 			      },
 			      "State": "Generated",
@@ -12444,7 +12444,7 @@ cultureInfo en-US
 			      "Definition": {
 			        "Binding": {
 			          "ConceptualEntity": "_measures",
-			          "ConceptualProperty": "sales YoYTD %"
+			          "ConceptualProperty": "revenue YoYTD %"
 			        }
 			      },
 			      "State": "Generated",
@@ -12500,7 +12500,7 @@ cultureInfo en-US
 			      "Definition": {
 			        "Binding": {
 			          "ConceptualEntity": "_measures",
-			          "ConceptualProperty": "sales YoQTD %"
+			          "ConceptualProperty": "revenue YoQTD %"
 			        }
 			      },
 			      "State": "Generated",
@@ -12556,7 +12556,7 @@ cultureInfo en-US
 			      "Definition": {
 			        "Binding": {
 			          "ConceptualEntity": "_measures",
-			          "ConceptualProperty": "sales QoYTD %"
+			          "ConceptualProperty": "revenue QoYTD %"
 			        }
 			      },
 			      "State": "Generated",
@@ -12612,7 +12612,7 @@ cultureInfo en-US
 			      "Definition": {
 			        "Binding": {
 			          "ConceptualEntity": "_measures",
-			          "ConceptualProperty": "sales QoQTD %"
+			          "ConceptualProperty": "revenue QoQTD %"
 			        }
 			      },
 			      "State": "Generated",
@@ -13130,7 +13130,7 @@ cultureInfo en-US
 			      "Definition": {
 			        "Binding": {
 			          "ConceptualEntity": "_measures",
-			          "ConceptualProperty": "Profit margin"
+			          "ConceptualProperty": "profit margin"
 			        }
 			      },
 			      "State": "Generated",

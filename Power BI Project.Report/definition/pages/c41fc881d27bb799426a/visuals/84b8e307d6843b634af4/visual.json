@@ -102,11 +102,11 @@
                       "Entity": "_measures"
                     }
                   },
-                  "Property": "Profit margin"
+                  "Property": "profit margin"
                 }
               },
               "queryRef": "_measures.Profit margin",
-              "nativeQueryRef": "Profit margin"
+              "nativeQueryRef": "profit margin"
             },
             {
               "field": {
@@ -116,7 +116,7 @@
                       "Entity": "_measures"
                     }
                   },
-                  "Property": "sales YoYTD %"
+                  "Property": "revenue YoYTD %"
                 }
               },
               "queryRef": "_measures.sales YoYTD %",
@@ -131,7 +131,7 @@
                       "Entity": "_measures"
                     }
                   },
-                  "Property": "sales YoQTD %"
+                  "Property": "revenue YoQTD %"
                 }
               },
               "queryRef": "_measures.sales YoQTD %",
@@ -146,7 +146,7 @@
                       "Entity": "_measures"
                     }
                   },
-                  "Property": "sales QoYTD %"
+                  "Property": "revenue QoYTD %"
                 }
               },
               "queryRef": "_measures.sales QoYTD %",
@@ -161,7 +161,7 @@
                       "Entity": "_measures"
                     }
                   },
-                  "Property": "sales QoQTD %"
+                  "Property": "revenue QoQTD %"
                 }
               },
               "queryRef": "_measures.sales QoQTD %",

@@ -181,54 +181,54 @@ table _measures
 
 		annotation PBI_FormatHint = {"isDecimal":true}
 
-	measure 'sales YTD' = CALCULATE ( [total_revenue], DATESYTD ( dim_date[Date] ) )
+	measure 'revenue YTD' = CALCULATE ( [total_revenue], DATESYTD ( dim_date[Date] ) )
 		lineageTag: 60f0fb4a-40a6-405a-9d60-131ce527b946
 
 		annotation PBI_FormatHint = {"isGeneralNumber":true}
 
-	measure 'sales QTD' = CALCULATE ( [total_revenue], DATESQTD ( dim_date[Date] ) )
+	measure 'revenue QTD' = CALCULATE ( [total_revenue], DATESQTD ( dim_date[Date] ) )
 		lineageTag: af8f0e50-92ec-4836-abff-b89c21eb8f6b
 
 		annotation PBI_FormatHint = {"isGeneralNumber":true}
 
-	measure 'sales YoYTD %' = ```
+	measure 'revenue YoYTD %' = ```
 			
-			VAR CurrentYTD = [sales YTD]
+			VAR CurrentYTD = [revenue YTD]
 			VAR PreviousYearYTD = 
-			    CALCULATE ( [Sales YTD], DATEADD ( dim_date[Date], -1, YEAR ) )
+			    CALCULATE ( [revenue YTD], DATEADD ( dim_date[Date], -1, YEAR ) )
 			RETURN
 			    DIVIDE ( CurrentYTD - PreviousYearYTD, PreviousYearYTD )
 			```
 		formatString: 0.00%;-0.00%;0.00%
 		lineageTag: b15c16ed-b514-4203-ac06-24a07511c32c
 
-	measure 'sales YoQTD %' = ```
+	measure 'revenue YoQTD %' = ```
 			
-			VAR CurrentQTD = [Sales QTD]
+			VAR CurrentQTD = [revenue QTD]
 			VAR PreviousYearQTD = 
-			    CALCULATE ( [Sales QTD], DATEADD ( dim_date[Date], -1, YEAR ) )
+			    CALCULATE ( [revenue QTD], DATEADD ( dim_date[Date], -1, YEAR ) )
 			RETURN
 			    DIVIDE ( CurrentQTD - PreviousYearQTD, PreviousYearQTD )
 			```
 		formatString: 0.00%;-0.00%;0.00%
 		lineageTag: d6b71fa1-91fc-4b5c-80fe-f2514a19e3ad
 
-	measure 'sales QoYTD %' = ```
+	measure 'revenue QoYTD %' = ```
 			
-			VAR CurrentYTD = [Sales YTD]
+			VAR CurrentYTD = [revenue YTD]
 			VAR PreviousQuarterYTD = 
-			    CALCULATE ( [Sales YTD], DATEADD ( dim_date[Date], -1, QUARTER ) )
+			    CALCULATE ( [revenue YTD], DATEADD ( dim_date[Date], -1, QUARTER ) )
 			RETURN
 			    DIVIDE( CurrentYTD - PreviousQuarterYTD, PreviousQuarterYTD )
 			```
 		formatString: 0.00%;-0.00%;0.00%
 		lineageTag: 5a78504e-c982-4eb7-b7cb-35ac3ece89ce
 
-	measure 'sales QoQTD %' =
+	measure 'revenue QoQTD %' =
 			
-			VAR CurrentQTD = [Sales QTD]
+			VAR CurrentQTD = [revenue QTD]
 			VAR PreviousQuarterQTD =
-			    CALCULATE ( [Sales QTD], DATEADD ( dim_date[Date], -1, QUARTER ) )
+			    CALCULATE ( [revenue QTD], DATEADD ( dim_date[Date], -1, QUARTER ) )
 			RETURN
 			    DIVIDE ( CurrentQTD - PreviousQuarterQTD, PreviousQuarterQTD )
 		formatString: 0.00%;-0.00%;0.00%
@@ -251,7 +251,7 @@ table _measures
 		formatString: 0.00%;-0.00%;0.00%
 		lineageTag: 35d2ec01-3dec-416d-9002-2c58224de4e1
 
-	measure 'Profit margin' = DIVIDE( [total_profit], [total_revenue] )
+	measure 'profit margin' = DIVIDE( [total_profit], [total_revenue] )
 		formatString: 0.00%;-0.00%;0.00%
 		lineageTag: a6ac86a0-3b9d-4462-82aa-92264a7f03ce
 
