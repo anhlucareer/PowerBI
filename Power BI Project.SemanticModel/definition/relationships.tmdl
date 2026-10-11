@@ -58,13 +58,10 @@ relationship 8d3fb204-a17c-f7a6-0e85-d67a16e32481
 	toColumn: dim_date.Date
 
 relationship 00d48f89-e617-eb4a-9fd1-295c278aa86a
-	crossFilteringBehavior: bothDirections
 	fromColumn: fact_inventory.month
 	toColumn: dim_date.Date
 
 relationship 148b9501-28fe-2a68-d0b2-3953c4f7fdc6
-	crossFilteringBehavior: bothDirections
-	fromCardinality: one
 	fromColumn: fact_campaign_spend.date
 	toColumn: dim_date.Date
 
@@ -93,8 +90,6 @@ relationship 23503b65-8ebd-74dd-1165-dfb59f1daead
 	toColumn: dim_date.Date
 
 relationship 81ba6daf-2dac-46fd-88ae-61614cc75f87
-	crossFilteringBehavior: bothDirections
-	fromCardinality: one
 	fromColumn: fact_sales_target.date
 	toColumn: dim_date.Date
 

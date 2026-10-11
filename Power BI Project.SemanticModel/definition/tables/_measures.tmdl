@@ -10,7 +10,7 @@ table _measures
 		formatString: 0
 		lineageTag: b009fbe0-1849-4925-bcfc-f3030c7cebad
 
-	measure revenue_promotedSKUs_inWindow =
+	measure revenue_promotedSKUs =
 			
 			SUMX (
 			    dim_campaign,
@@ -52,14 +52,14 @@ table _measures
 
 	measure 'ROAS ratio' =
 			
-			DIVIDE ( [revenue_promotedSKUs_inWindow], SUM ( fact_campaign_spend[spend] ) )
+			DIVIDE ( [revenue_promotedSKUs], SUM ( fact_campaign_spend[spend] ) )
 		formatString: 0.00
 		lineageTag: e21b491d-19c4-4ad1-a5a2-501051f8ee47
 
 	measure 'ROI ratio' =
 			
-			VAR Rev  = [revenue_promotedSKUs_inWindow]
-			VAR Cost = [cost_promotedSKUs_inWindow] + SUM ( fact_campaign_spend[spend] )
+			VAR Rev  = [revenue_promotedSKUs]
+			VAR Cost = [cost_promotedSKUs] + SUM ( fact_campaign_spend[spend] )
 			RETURN
 			    DIVIDE ( Rev - Cost, Cost )
 		formatString: 0.0%;-0.0%;0.0%
@@ -156,18 +156,11 @@ table _measures
 		formatString: 0
 		lineageTag: 2fd2800b-d677-40ee-9c24-e86bc8143d9b
 
-	measure 'Revenue Pct' =
-			
-			VAR VisibleRevenue =
-			    SUMX ( VALUES ( dim_campaign[campaign_name] ), [revenue_promotedSKUs_inWindow] )
-			VAR AllCampaignsRevenue =
-			    SUMX ( ALL( dim_campaign[campaign_name] ), [total_revenue] )
-			RETURN
-			    DIVIDE ( VisibleRevenue, AllCampaignsRevenue )
+	measure 'campaign Revenue Pct' = DIVIDE ( [revenue_promotedSKUs] , [all_net_revenue] )
 		formatString: 0.00%;-0.00%;0.00%
 		lineageTag: ce1acd2f-6789-42e4-9579-9818568c1a2b
 
-	measure cost_promotedSKUs_inWindow =
+	measure cost_promotedSKUs =
 			
 			SUMX (
 			    dim_campaign,
@@ -183,9 +176,10 @@ table _measures
 			            KEEPFILTERS ( TREATAS ( PromotedSKUs, dim_product[product_key] ) )
 			        )
 			)
+		formatString: #,0
 		lineageTag: bb631ea6-47c0-43d5-9594-7c5d07163684
 
-		annotation PBI_FormatHint = {"isGeneralNumber":true}
+		annotation PBI_FormatHint = {"isDecimal":true}
 
 	measure 'sales YTD' = CALCULATE ( [total_revenue], DATESYTD ( dim_date[Date] ) )
 		lineageTag: 60f0fb4a-40a6-405a-9d60-131ce527b946

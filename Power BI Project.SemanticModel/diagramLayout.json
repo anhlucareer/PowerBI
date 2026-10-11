@@ -195,15 +195,17 @@
         },
         {
           "location": {
-            "x": 2491.1794321105708,
-            "y": 285.86657400160345
+            "x": 23.179432110570815,
+            "y": 93.866574001603453
           },
           "nodeIndex": "TopProducts",
+          "nodeLineageTag": "21b3fee9-f8b4-49f5-b7cf-4fc784de55d6",
           "size": {
-            "height": 200,
+            "height": 72,
             "width": 234
           },
-          "zIndex": 0
+          "zIndex": 0,
+          "expandedHeight": 200
         }
       ],
       "name": "All tables",

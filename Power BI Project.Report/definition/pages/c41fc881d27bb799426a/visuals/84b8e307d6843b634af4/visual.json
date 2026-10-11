@@ -2,11 +2,11 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.9.0/schema.json",
   "name": "84b8e307d6843b634af4",
   "position": {
-    "x": 563.72581800812043,
-    "y": 446.33389061380467,
+    "x": 563.52941176470586,
+    "y": 454.11764705882354,
     "z": 11000,
-    "height": 273.9144972534034,
-    "width": 701.90589921184619,
+    "height": 265.88235294117646,
+    "width": 702.35294117647061,
     "tabOrder": 11000
   },
   "visual": {
@@ -102,11 +102,25 @@
                       "Entity": "_measures"
                     }
                   },
+                  "Property": "Profit margin"
+                }
+              },
+              "queryRef": "_measures.Profit margin",
+              "nativeQueryRef": "Profit margin"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_measures"
+                    }
+                  },
                   "Property": "sales YoYTD %"
                 }
               },
               "queryRef": "_measures.sales YoYTD %",
-              "nativeQueryRef": "Rev. YoYTD %",
+              "nativeQueryRef": "sales YoYTD %",
               "displayName": "Rev. YoYTD %"
             },
             {
@@ -121,7 +135,7 @@
                 }
               },
               "queryRef": "_measures.sales YoQTD %",
-              "nativeQueryRef": "Rev. YoQTD %",
+              "nativeQueryRef": "sales YoQTD %",
               "displayName": "Rev. YoQTD %"
             },
             {
@@ -136,7 +150,7 @@
                 }
               },
               "queryRef": "_measures.sales QoYTD %",
-              "nativeQueryRef": "Rev. QoYTD %",
+              "nativeQueryRef": "sales QoYTD %",
               "displayName": "Rev. QoYTD %"
             },
             {
@@ -151,42 +165,11 @@
                 }
               },
               "queryRef": "_measures.sales QoQTD %",
-              "nativeQueryRef": "Rev. QoQTD %",
+              "nativeQueryRef": "sales QoQTD %",
               "displayName": "Rev. QoQTD %"
-            },
-            {
-              "field": {
-                "Measure": {
-                  "Expression": {
-                    "SourceRef": {
-                      "Entity": "_measures"
-                    }
-                  },
-                  "Property": "Profit margin"
-                }
-              },
-              "queryRef": "_measures.Profit margin",
-              "nativeQueryRef": "Profit margin"
             }
           ]
         }
-      },
-      "sortDefinition": {
-        "sort": [
-          {
-            "field": {
-              "Measure": {
-                "Expression": {
-                  "SourceRef": {
-                    "Entity": "_measures"
-                  }
-                },
-                "Property": "sales YoYTD %"
-              }
-            },
-            "direction": "Descending"
-          }
-        ]
       }
     },
     "expansionStates": [
@@ -199,18 +182,6 @@
             "queryRefs": [
               "dim_date.Year Hierarchy.Year"
             ],
-            "identityKeys": [
-              {
-                "Column": {
-                  "Expression": {
-                    "SourceRef": {
-                      "Entity": "dim_date"
-                    }
-                  },
-                  "Property": "Year"
-                }
-              }
-            ],
             "isPinned": true
           },
           {
@@ -218,18 +189,6 @@
               "dim_date.Year Hierarchy.Year Quarter"
             ],
             "isCollapsed": true,
-            "identityKeys": [
-              {
-                "Column": {
-                  "Expression": {
-                    "SourceRef": {
-                      "Entity": "dim_date"
-                    }
-                  },
-                  "Property": "Year Quarter"
-                }
-              }
-            ],
             "isPinned": true
           },
           {
