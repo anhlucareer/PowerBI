@@ -25,6 +25,7 @@ relationship c691f5b6-a505-4298-bd2d-adcce82f742a
 	toColumn: LocalDateTable_04b4c164-0bed-4b2c-969d-af278b674360.Date
 
 relationship AutoDetected_abdb40aa-ac5a-4735-93e6-b39d3faf7f01
+	crossFilteringBehavior: bothDirections
 	fromColumn: fact_promotion_coverage.product_key
 	toColumn: dim_product.product_key
 
